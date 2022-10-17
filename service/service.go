@@ -21,7 +21,7 @@ func startService(ctx context.Context, serviceName, host, port string) context.C
 	// TODO: create instance of a server
 	var srv http.Server
 	srv.Addr = ":" + port
-	// TODO: create go routines - start listening and allow the option to shutdown
+	// TODO: create go routines - start listening and allow the option to shut down
 	go func() {
 		log.Println(srv.ListenAndServe())
 		cancel()
