@@ -1,6 +1,10 @@
 # gradebook_app
 
-Gradebook Distributed Application with Go
+Gradebook Microservices Application with Go
+
+---
+
+# High Level Architecture
 
 ---
 
