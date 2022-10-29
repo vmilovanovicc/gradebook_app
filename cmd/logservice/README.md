@@ -25,4 +25,4 @@ This should log the body's request in `app.log`.
 
 ---
 
-To stop the service, press any key.~~~~
+To stop the service, press any key.
