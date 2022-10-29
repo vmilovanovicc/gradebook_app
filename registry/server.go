@@ -10,7 +10,7 @@ import (
 // Define the registry service
 
 const (
-	ServerPort  = "3000"
+	ServerPort  = ":3000"
 	ServicesURL = "http://localhost" + ServerPort + "/services"
 )
 
