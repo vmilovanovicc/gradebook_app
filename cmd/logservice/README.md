@@ -12,6 +12,8 @@ This will create the binary `logservice.exe`.
 
 ![logservice](../../img/cmd_logservice.png "Run logservice")
 
+To stop the service, press any key.
+
 ---
 ## Test
 
@@ -25,4 +27,19 @@ This should log the body's request in `app.log`.
 
 ---
 
-To stop the service, press any key.
+## Registering Log Service
+
+The app is not Dockerized, so use two terminals to check if Log Service can be registered with the service registry.
+
+Terminal 1:
+* Rebuild the Registry service.
+* Start the Registry service.
+
+Terminal 2:
+* Rebuild the Log service.
+* Start the Log service.
+
+The request to register got received. And LogService with URL `localhost:4000` was added, which is exactly where the log service is running at. 
+
+![register_logservice](../../img/register_logservice.png "Register LogService")
+
