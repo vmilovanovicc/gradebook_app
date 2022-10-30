@@ -13,6 +13,10 @@ func Start(ctx context.Context, host, port string, reg registry.Registration, re
 	registerHandlersFunc()
 	ctx = startService(ctx, reg.ServiceName, host, port)
 
+	err := registry.RegisterService(reg)
+	if err != nil {
+		return ctx, err
+	}
 	return ctx, nil
 }
 
