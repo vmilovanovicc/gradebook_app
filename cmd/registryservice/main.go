@@ -1,4 +1,4 @@
-package registryservice
+package main
 
 import (
 	"context"
