@@ -37,7 +37,7 @@ var reg = registry{
 type RegistryService struct{}
 
 // Accept a new registration.
-func (s RegistryService) ServerHTTP(w http.ResponseWriter, req *http.Request) {
+func (s RegistryService) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	log.Println("Request received.")
 	switch req.Method {
 	case http.MethodPost:

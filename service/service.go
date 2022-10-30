@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// kick off web service
+// Start the web service.
 func Start(ctx context.Context, serviceName, host, port string, registerHandlersFunc func()) (context.Context, error) {
 	registerHandlersFunc()
 	ctx = startService(ctx, serviceName, host, port)
@@ -17,16 +17,16 @@ func Start(ctx context.Context, serviceName, host, port string, registerHandlers
 
 func startService(ctx context.Context, serviceName, host, port string) context.Context {
 	ctx, cancel := context.WithCancel(ctx)
-
-	// TODO: create instance of a server
 	var srv http.Server
 	srv.Addr = ":" + port
-	// TODO: create go routines - start listening and allow the option to shut down
+
+	// Start the server.
 	go func() {
 		log.Println(srv.ListenAndServe())
 		cancel()
 	}()
 
+	// Shut down the server.
 	go func() {
 		fmt.Printf("%v started. Press any key to stop.\n", serviceName)
 		var s string
