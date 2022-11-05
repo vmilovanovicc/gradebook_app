@@ -29,7 +29,7 @@ This should log the body's request in `app.log`.
 
 ## Registering Log Service
 
-The app is not Dockerized, so use two terminals to check if Log Service can be registered with the service registry.
+The app is not Dockerized, so use two terminals to check if the log service can be registered with the service registry.
 
 Terminal 1:
 * Rebuild the Registry service.
@@ -39,12 +39,14 @@ Terminal 2:
 * Rebuild the Log service.
 * Start the Log service.
 
-The request to register got received. And LogService with URL `localhost:4000` was added, which is exactly where the log service is running at. 
+The request to register got received. And log service with URL `localhost:4000` was added, which is exactly where the log service is running at. 
 
 ![register_logservice](../../img/register_logservice.png "Register LogService")
 
 ---
 
 ## Deregistering Log Service
+
+The request to deregister got received.
 
 ![deregister_log](../../img/deregistration.png "Deregister LogService")

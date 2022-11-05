@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// Allow web service (e.g. log service) to register itself with the service registry.
+// RegisterService allows a web service to register itself with the service registry.
 // Buffer holds data for the POST request.
 func RegisterService(r Registration) error {
 	buf := new(bytes.Buffer)
@@ -21,12 +21,12 @@ func RegisterService(r Registration) error {
 		return err
 	}
 	if res.StatusCode != http.StatusOK {
-		return fmt.Errorf("Failed to register service. Registry service responded with code %v", res.StatusCode)
+		return fmt.Errorf("failed to register service. Registry service responded with code %v", res.StatusCode)
 	}
 	return nil
 }
 
-// Allow web service to deregister itself with the service registry.
+// ShutdownService allows a web service to deregister itself with the service registry.
 func ShutdownService(serviceURL string) error {
 	req, err := http.NewRequest(http.MethodDelete, ServicesURL, bytes.NewBuffer([]byte(serviceURL)))
 	if err != nil {
@@ -36,7 +36,7 @@ func ShutdownService(serviceURL string) error {
 	// Send delete request to registry service.
 	res, err := http.DefaultClient.Do(req)
 	if res.StatusCode != http.StatusOK {
-		return fmt.Errorf("Failed to deregister service. Registry service responded with code %v", res.StatusCode)
+		return fmt.Errorf("failed to deregister service. Registry service responded with code %v", res.StatusCode)
 	}
 	return err
 }

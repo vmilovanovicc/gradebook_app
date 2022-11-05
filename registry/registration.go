@@ -1,6 +1,6 @@
 package registry
 
-// Hold all of the information about what a service registration looks like.
+// Hold all the information about what a service registration looks like.
 
 type Registration struct {
 	ServiceName ServiceName
