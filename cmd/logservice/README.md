@@ -43,3 +43,8 @@ The request to register got received. And LogService with URL `localhost:4000` w
 
 ![register_logservice](../../img/register_logservice.png "Register LogService")
 
+---
+
+## Deregistering Log Service
+
+![deregister_log](../../img/deregistration.png "Deregister LogService")
