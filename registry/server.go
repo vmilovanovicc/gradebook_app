@@ -3,6 +3,7 @@ package registry
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"sync"
@@ -50,10 +51,10 @@ var reg = registry{
 
 type RegistryService struct{}
 
-// Accept a new registration.
 func (s RegistryService) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	log.Println("Request received.")
 	switch req.Method {
+	// Accept a new registration.
 	case http.MethodPost:
 		dec := json.NewDecoder(req.Body)
 		var r Registration
@@ -70,6 +71,23 @@ func (s RegistryService) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+	// Delete registration.
+	case http.MethodDelete:
+		payload, err := io.ReadAll(req.Body)
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		url := string(payload)
+		log.Printf("Removing service at URL: %v", url)
+		err = reg.remove(url)
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
