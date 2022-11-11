@@ -12,17 +12,12 @@ Gradebook Microservices Application with Go
 ---
 
 # Components
-1. **Service Registry**
-- Service Registration
-- Health Monitoring
-2. **Log Service**
-- Centralized Logging
-3. **Grading Service**
-- Business Logic
-- Data Persistance
-4. **Teacher Portal**
-- Web Application
-- API Gateway
+
+| Service Registry     | Log Service         | Grading Service  | Teacher Portal  |
+|----------------------|---------------------|------------------|-----------------|
+| Service Registration | Centralized Logging | Business Logic   | Web Application |
+| Health Monitoring    |                     | Data Persistence | API Gateway     |
+
 ---
 
 # Workflow
