@@ -26,7 +26,16 @@ Gradebook Microservices Application with Go
 ---
 
 # Workflow
+
+**Service Registration**
 * Create a web service (log service)
 * Create the registry service (service registry)
 * Register the web service
 * Deregister the web service
+---
+**Service Discovery**
+* Create the grading service
+* Request required services on startup
+* Notify when new services start
+* Notify when services shut down
+---
