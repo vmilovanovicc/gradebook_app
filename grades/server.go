@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -55,4 +56,17 @@ func (sh studentsHandler) toJSON(obj interface{}) ([]byte, error) {
 		return nil, fmt.Errorf("failed to serialize students: &q", err)
 	}
 	return b.Bytes(), nil
+}
+
+func (sh studentsHandler) getAll(w http.ResponseWriter, req *http.Request) {
+	studentsMutex.Lock()
+	defer studentsMutex.Unlock()
+	data, err := sh.toJSON(students)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(data)
 }

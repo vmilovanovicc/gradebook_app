@@ -1,6 +1,9 @@
 package grades
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type Student struct {
 	ID        int
@@ -13,7 +16,10 @@ type Student struct {
 // The app does not have a backing database.
 type Students []Student
 
-var students Students
+var (
+	students      Students
+	studentsMutex sync.Mutex
+)
 
 type GradeType string
 
