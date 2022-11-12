@@ -89,3 +89,35 @@ func (sh studentsHandler) getOne(w http.ResponseWriter, req *http.Request, id in
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(data)
 }
+
+func (sh studentsHandler) addGrade(w http.ResponseWriter, req *http.Request, id int) {
+	studentsMutex.Lock()
+	defer studentsMutex.Unlock()
+	// Return a student.
+	student, err := students.GetByID(id)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		log.Println(err)
+		return
+	}
+	// Decode grades from the POST body.
+	var g Grade
+	dec := json.NewDecoder(req.Body)
+	err1 := dec.Decode(&g)
+	if err1 != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err1)
+		return
+	}
+	// Add a new grade onto the student's grades slice.
+	student.Grades = append(student.Grades, g)
+	w.WriteHeader(http.StatusCreated)
+
+	data, err2 := sh.toJSON(g)
+	if err2 != nil {
+		log.Println(err2)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(data)
+}
