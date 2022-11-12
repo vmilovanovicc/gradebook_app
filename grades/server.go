@@ -1,6 +1,9 @@
 package grades
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -41,4 +44,15 @@ func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	default:
 		w.WriteHeader(http.StatusNotFound)
 	}
+}
+
+// toJSON converts object to JSON
+func (sh studentsHandler) toJSON(obj interface{}) ([]byte, error) {
+	var b bytes.Buffer
+	enc := json.NewEncoder(&b)
+	err := enc.Encode(obj)
+	if err != nil {
+		return nil, fmt.Errorf("failed to serialize students: &q", err)
+	}
+	return b.Bytes(), nil
 }
