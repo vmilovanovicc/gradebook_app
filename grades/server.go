@@ -10,7 +10,6 @@ import (
 	"strings"
 )
 
-// define server logic
 func RegisterHandlers() {
 	handler := new(studentsHandler)
 	http.Handle("/students", handler)
@@ -53,7 +52,7 @@ func (sh studentsHandler) toJSON(obj interface{}) ([]byte, error) {
 	enc := json.NewEncoder(&b)
 	err := enc.Encode(obj)
 	if err != nil {
-		return nil, fmt.Errorf("failed to serialize students: &q", err)
+		return nil, fmt.Errorf("failed to serialize students: %q", err)
 	}
 	return b.Bytes(), nil
 }
@@ -65,6 +64,26 @@ func (sh studentsHandler) getAll(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Println(err)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write(data)
+}
+
+func (sh studentsHandler) getOne(w http.ResponseWriter, req *http.Request, id int) {
+	studentsMutex.Lock()
+	defer studentsMutex.Unlock()
+	student, err := students.GetByID(id)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		log.Println(err)
+		return
+	}
+
+	data, err := sh.toJSON(student)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(fmt.Errorf("failed to serialize student: %q", err))
 		return
 	}
 	w.Header().Add("Content-Type", "application/json")
