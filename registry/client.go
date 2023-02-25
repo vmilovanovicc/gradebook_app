@@ -38,12 +38,12 @@ func RegisterService(r Registration) error {
 
 type serviceUpdateHandler struct{}
 
-func (suh serviceUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+func (suh serviceUpdateHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-	dec := json.NewDecoder(r.Body)
+	dec := json.NewDecoder(req.Body)
 	var p patch
 	err := dec.Decode(&p)
 	if err != nil {
