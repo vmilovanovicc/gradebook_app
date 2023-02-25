@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"sync"
 )
@@ -68,6 +69,19 @@ func (p *providers) Update(pat patch) {
 			}
 		}
 	}
+}
+
+func (p providers) get(name ServiceName) (string, error) {
+	providers, ok := p.services[name]
+	if !ok {
+		return "", fmt.Errorf("No providers available for service %v", name)
+	}
+	idx := int(rand.Float32() * float32(len(providers)))
+	return providers[idx], nil
+}
+
+func GetProvider(name ServiceName) (string, error) {
+	return prov.get(name)
 }
 
 var prov = providers{
