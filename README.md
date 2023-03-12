@@ -2,6 +2,12 @@
 
 Gradebook Microservices Application with Go
 
+![GitHub Last Commit](https://img.shields.io/github/last-commit/vmilovanovicc/gradebook_app)
+![Github Top Language](https://img.shields.io/github/languages/top/vmilovanovicc/gradebook_app)
+![Go Version](https://img.shields.io/github/go-mod/go-version/vmilovanovicc/gradebook_app)
+![Licence](https://img.shields.io/github/license/vmilovanovicc/gradebook_app)
+
+
 ---
 
 # High Level Architecture
