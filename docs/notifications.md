@@ -11,4 +11,11 @@
 
 ### Notify a service when a dependency is stopped
 
-*to be updated*
+Steps to achieve this:
+- Run registry service
+- Run logging service
+- Run grading service
+- Stop logging service
+- Re-run logging service
+
+![stop](../img/notify_stop.jpg "Notify when a dependency service is stopped")
