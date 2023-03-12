@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"gradebook_app/grades"
+	"gradebook_app/log"
 	"gradebook_app/registry"
 	"gradebook_app/service"
 	stlog "log"

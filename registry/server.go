@@ -32,7 +32,50 @@ func (r *registry) add(reg Registration) error {
 	if err != nil {
 		return err
 	}
+	r.notify(patch{
+		Added: []patchEntry{
+			{
+				Name: reg.ServiceName,
+				URL:  reg.ServiceURL,
+			},
+		},
+	})
 	return nil
+}
+
+// General purpose notification method is looping through all the registrations that are present in the service registry, and it's checking each one of those registrations to see if the full patch affects any of that registration's dependencies.
+func (r registry) notify(fullPatch patch) {
+	r.mutex.RLock()
+	defer r.mutex.RUnlock()
+	// If any of the services that were added to the patch are required services, let that service know that that came online.
+	// If anything was removed by the full patch, let that service know that that dependency is no longer available.
+	for _, reg := range r.registrations {
+		go func(reg Registration) {
+			for _, reqService := range reg.RequiredServices {
+				p := patch{Added: []patchEntry{}, Removed: []patchEntry{}}
+				sendUpdate := false
+				for _, added := range fullPatch.Added {
+					if added.Name == reqService {
+						p.Added = append(p.Added, added)
+						sendUpdate = true
+					}
+				}
+				for _, removed := range fullPatch.Removed {
+					if removed.Name == reqService {
+						p.Removed = append(p.Removed, removed)
+						sendUpdate = true
+					}
+				}
+				if sendUpdate {
+					err := r.sendPatch(p, reg.ServiceUpdateURL)
+					if err != nil {
+						log.Println(err)
+					}
+					return
+				}
+			}
+		}(reg)
+	}
 }
 
 // Send the service(s) that the specified service requires.

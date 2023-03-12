@@ -12,12 +12,14 @@ import (
 func main() {
 	log.Run("./app.log")
 	host, port := "localhost", "4000"
-	serviceAddress := fmt.Sprintf("https://%v:%v", host, port)
+	serviceAddress := fmt.Sprintf("http://%v:%v", host, port)
 
 	// Create registration object.
 	var r registry.Registration
 	r.ServiceName = registry.LogService
 	r.ServiceURL = serviceAddress
+	r.RequiredServices = make([]registry.ServiceName, 0)
+	r.ServiceUpdateURL = r.ServiceURL + "/services"
 
 	ctx, err := service.Start(
 		context.Background(),
@@ -26,8 +28,7 @@ func main() {
 		r,
 		log.RegisterHandlers,
 	)
-	r.RequiredServices = make([]registry.ServiceName, 0)
-	r.ServiceUpdateURL = r.ServiceURL + "/services"
+
 	if err != nil {
 		stlog.Fatal(err)
 	}
