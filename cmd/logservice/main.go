@@ -12,7 +12,7 @@ import (
 func main() {
 	log.Run("./app.log")
 	host, port := "localhost", "4000"
-	serviceAddress := fmt.Sprintf("http://%v:%v", host, port)
+	serviceAddress := fmt.Sprintf("https://%v:%v", host, port)
 
 	// Create registration object.
 	var r registry.Registration
@@ -26,6 +26,8 @@ func main() {
 		r,
 		log.RegisterHandlers,
 	)
+	r.RequiredServices = make([]registry.ServiceName, 0)
+	r.ServiceUpdateURL = r.ServiceURL + "/services"
 	if err != nil {
 		stlog.Fatal(err)
 	}
