@@ -23,11 +23,19 @@ Gradebook Microservices Application with Go
 
 ---
 
+# Documentation
+* [Service Registry](docs/registryservice.md)
+* [Log Service](docs/logservice.md)
+* [Grading Service](docs/gradingservice.md)
+* [Notifications](docs/notifications.md)
+
+---
+
 # Workflow
 
 **Service Registration**
-* Create a web service (log service)
-* Create the registry service (service registry)
+* Create the log service
+* Create the registry service 
 * Register the web service
 * Deregister the web service
 ---
