@@ -12,9 +12,6 @@ Gradebook Microservices Application with Go
 
 # High Level Architecture
 
-![HLA](img/hla_gradebook.png "High Level Architecture")
-
-
 ---
 
 # Components
@@ -40,3 +37,7 @@ Gradebook Microservices Application with Go
 * Notify when new services start
 * Notify when services shut down
 ---
+**Service Monitoring**
+* Create the Teacher Portal - a web app
+* Add health checks
+
