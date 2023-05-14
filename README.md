@@ -12,9 +12,6 @@ Gradebook Microservices Application with Go
 
 # High Level Architecture
 
-![HLA](img/hla_gradebook.png "High Level Architecture")
-
-
 ---
 
 # Components
@@ -26,11 +23,19 @@ Gradebook Microservices Application with Go
 
 ---
 
+# Documentation
+* [Service Registry](docs/registryservice.md)
+* [Log Service](docs/logservice.md)
+* [Grading Service](docs/gradingservice.md)
+* [Notifications](docs/notifications.md)
+
+---
+
 # Workflow
 
 **Service Registration**
-* Create a web service (log service)
-* Create the registry service (service registry)
+* Create the log service
+* Create the registry service 
 * Register the web service
 * Deregister the web service
 ---
@@ -40,3 +45,7 @@ Gradebook Microservices Application with Go
 * Notify when new services start
 * Notify when services shut down
 ---
+**Service Monitoring**
+* Create the Teacher Portal - a web app
+* Add health checks
+
