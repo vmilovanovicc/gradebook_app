@@ -7,6 +7,7 @@ type Registration struct {
 	ServiceURL       string
 	RequiredServices []ServiceName
 	ServiceUpdateURL string
+	HealthCheckURL   string
 }
 type ServiceName string
 
