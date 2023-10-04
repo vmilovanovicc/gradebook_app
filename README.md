@@ -28,6 +28,7 @@ Gradebook Microservices Application with Go
 * [Log Service](docs/logservice.md)
 * [Grading Service](docs/gradingservice.md)
 * [Notifications](docs/notifications.md)
+* [Teacher Portal](docs/teacherportal.md)
 
 ---
 

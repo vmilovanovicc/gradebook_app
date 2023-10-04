@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"sync"
+	"time"
 )
 
 // Define the registry service
@@ -133,6 +134,42 @@ func (r *registry) remove(url string) error {
 		}
 	}
 	return fmt.Errorf("service at URL %v not found", url)
+}
+
+// healthCheck enables status monitoring
+// If a service is not available, remove it to disable other services to send requests to it,
+// But keep checking to see if it comes back online.
+func (r *registry) healthCheck(freq time.Duration) {
+	for {
+		var wg sync.WaitGroup
+		for _, reg := range r.registrations {
+			wg.Add(1)
+			go func(reg Registration) {
+				defer wg.Done()
+				success := true
+				for attempts := 0; attempts < 3; attempts++ {
+					res, err := http.Get(reg.HealthCheckURL)
+					if err != nil {
+						log.Println(err)
+					} else if res.StatusCode == http.StatusOK {
+						log.Printf("HealthCheck passed for %v", reg.ServiceName)
+						if !success {
+							r.add(reg)
+						}
+						break
+					}
+					log.Printf("HealthCheck failed for %v", reg.ServiceName)
+					if success {
+						success = false
+						r.remove(reg.ServiceURL)
+					}
+					time.Sleep(1 * time.Second)
+				}
+			}(reg)
+			wg.Wait()
+			time.Sleep(freq)
+		}
+	}
 }
 
 // Create registry instance
